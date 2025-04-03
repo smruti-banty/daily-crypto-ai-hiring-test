@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import express from 'express';
 import cors from 'cors';
+import booksRoutes from "./routes/books.routes";
 
 dotenv.config();
 
@@ -16,6 +17,9 @@ app.use(express.json());
 app.use("/hello", (_req, res) => {
     res.send("Hello World");
 });
+
+// Routes
+app.use('/api/books', booksRoutes);
 
 console.log("process.env", process.env.MONGODB_URI)
 // Database connection
