@@ -31,7 +31,7 @@ const Login = () => {
             </div>
             <hr className="my-3 border-amber-500"/>
             <div className="my-5">
-                <form action="#" onSubmit={onSubmit}>
+                <form onSubmit={onSubmit}>
                     <div className="mx-auto flex flex-col items-center justify-center gap-4">
                         <div
                             className="bg-neutral-950 p-2 rounded-lg shadow-lg flex items-center gap-1 w-full md:w-[60%] lg:w-[40%]">
