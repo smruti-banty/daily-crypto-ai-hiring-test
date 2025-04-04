@@ -4,7 +4,7 @@ export interface IBook extends Document {
     title: string;
     author: string;
     genre: string;
-    userId: Types.ObjectId;
+    userId: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -13,7 +13,7 @@ const bookSchema = new Schema<IBook>({
         title: {type: String, required: true},
         author: {type: String, required: true},
         genre: {type: String, required: true},
-        userId: {type: Schema.Types.ObjectId, ref: "User", required: true}, // Reference to User model
+        userId: {type: String, required: true},
     },
     {timestamps: true});
 
