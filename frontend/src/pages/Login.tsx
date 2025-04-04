@@ -1,10 +1,11 @@
 import logo from '../assets/booknest.png';
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router";
 import {FormEvent} from "react";
 import {userLogin} from "../services/auth.service.ts";
 import {AxiosError} from "axios";
 
 const Login = () => {
+    const navigate = useNavigate();
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -14,8 +15,8 @@ const Login = () => {
 
         try {
             await userLogin(email, password);
-            alert("Login successful");
-        }catch (error) {
+            navigate("/");
+        } catch (error) {
             if (error instanceof AxiosError) {
                 alert(error.response?.data?.message);
             }

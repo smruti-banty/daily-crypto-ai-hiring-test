@@ -1,6 +1,11 @@
 import logo from '../assets/booknest.png'
+import {removeToken} from "../services/token.service.ts";
 
 const Header = () => {
+    const onLogout = () => {
+        removeToken();
+        window.location.reload();
+    }
     return <header className="bg-neutral-950 p-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
             <img src={logo} className="w-20 h-20" alt="Logo"/>
@@ -8,7 +13,7 @@ const Header = () => {
         </div>
 
         <div>
-            <button className="flex items-center gap-2 cursor-pointer hover:text-gray-200">
+            <button className="flex items-center gap-2 cursor-pointer hover:text-gray-200" onClick={onLogout}>
                 <i className="bx bx-log-out text-xl"></i>
                 Logout
             </button>

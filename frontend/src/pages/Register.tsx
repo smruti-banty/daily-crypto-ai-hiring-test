@@ -1,10 +1,11 @@
 import logo from '../assets/booknest.png';
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router";
 import {FormEvent} from "react";
 import {registerUser} from "../services/auth.service.ts";
 import {AxiosError} from "axios";
 
 const Register = () => {
+    const navigate = useNavigate();
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -15,8 +16,8 @@ const Register = () => {
 
         try {
             await registerUser(email, password, name);
-            alert("User registered successfully.");
-        }catch (error) {
+            navigate("/?success");
+        } catch (error) {
             if (error instanceof AxiosError) {
                 alert(error.response?.data?.message);
             }
@@ -44,7 +45,7 @@ const Register = () => {
                         <div
                             className="bg-neutral-950 p-2 rounded-lg shadow-lg flex items-center gap-1 w-full md:w-[60%] lg:w-[40%]">
                             <i className='bx bx-envelope text-xl text-amber-500'></i>
-                            <input type="email" autoFocus placeholder="Enter your email"
+                            <input type="email" placeholder="Enter your email"
                                    className="w-full outline-none text-sm p-1" name="email" required/>
                         </div>
 

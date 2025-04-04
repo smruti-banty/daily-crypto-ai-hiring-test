@@ -1,9 +1,9 @@
 import {Book} from "../models/Book.ts";
 
 type BooksTableProps = {
-    editBook: (bookId: string) => void,
-    books: Book[],
-    onDeleteBook: (bookId: string) => Promise<void>
+    editBook: (bookId: string) => void;
+    books: Book[];
+    onDeleteBook: (bookId: string) => Promise<void>;
 }
 
 const BooksTable = ({editBook, books, onDeleteBook}: BooksTableProps) => {

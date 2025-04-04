@@ -1,14 +1,34 @@
 import Header from "../components/Header.tsx";
 import AddBookModal from "../components/AddBookModal.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import BooksTable from "../components/BooksTable.tsx";
 import {useBooks} from "../hooks/useBooks.ts";
 import {deleteBook} from "../services/books.service.ts";
+import Toaster from "../components/Toaster.tsx";
+import {useSearchParams} from "react-router";
+import {ToastType} from "../models/ToastType.ts";
 
 const Home = () => {
+    const [searchParams] = useSearchParams();
+
     const [showAddBookModal, setShowAddBookModal] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
+    const [toastType, setToastType] = useState(ToastType.INFO);
     const [bookId, setBookId] = useState("");
     const {books, refetch} = useBooks();
+
+    useEffect(() => {
+        if (searchParams.get("success") != null) {
+            showToaster("Account created successfully.");
+        }
+    }, [searchParams]);
+
+    const showToaster = (message: string, type = ToastType.INFO) => {
+        setToastType(type);
+        setToastMessage(message);
+        setShowToast(true);
+    }
 
     const editBook = (bookId: string) => {
         if (bookId) {
@@ -23,16 +43,23 @@ const Home = () => {
     }
 
     const onDeleteBook = async (bookId: string) => {
-       if (!bookId) {
+        if (!bookId) {
             return;
-       }
+        }
 
         try {
-            await deleteBook(bookId);
-            refetch();
+            if (confirm("Are you sure you want to delete this book?")) {
+                await deleteBook(bookId);
+                refetch();
+                showToaster("Book deleted successfully.", ToastType.SUCCESS);
+            }
         } catch (error) {
-            console.error(error);
+            showToaster((error as Error).message, ToastType.ERROR);
         }
+    }
+
+    const onToasterClose = () => {
+        setShowToast(false);
     }
 
     return <>
@@ -53,7 +80,10 @@ const Home = () => {
             </section>
         </main>
 
-        {showAddBookModal && <AddBookModal setShowAddBookModal={setShowAddBookModal} bookId={bookId} refetch={refetch}/>}
+        {showAddBookModal &&
+            <AddBookModal setShowAddBookModal={setShowAddBookModal} bookId={bookId} refetch={refetch} showToaster={showToaster}/>}
+
+        {showToast && <Toaster message={toastMessage} onClose={onToasterClose} type={toastType}/>}
     </>;
 }
 
