@@ -1,7 +1,29 @@
 import logo from '../assets/booknest.png';
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router";
+import {FormEvent} from "react";
+import {registerUser} from "../services/auth.service.ts";
+import {AxiosError} from "axios";
 
 const Register = () => {
+    const navigate = useNavigate();
+    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        const name = formData.get("name") as string;
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
+
+        try {
+            await registerUser(email, password, name);
+            navigate("/?success");
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                alert(error.response?.data?.message);
+            }
+        }
+    }
+
     return (<div className="min-h-[100vh] flex items-center justify-center bg-neutral-950">
         <section className="md:w-[60%] w-[90%] mx-auto shadow-2xl bg-neutral-800 p-2 rounded-lg">
             <div className="flex flex-col items-center justify-center ">
@@ -11,27 +33,27 @@ const Register = () => {
             </div>
             <hr className="my-3 border-amber-500"/>
             <div className="my-5">
-                <form action="#">
+                <form onSubmit={onSubmit}>
                     <div className="mx-auto flex flex-col items-center justify-center gap-4">
                         <div
                             className="bg-neutral-950 p-2 rounded-lg shadow-lg flex items-center gap-1 w-full md:w-[60%] lg:w-[40%]">
                             <i className='bx bx-user text-xl text-amber-500'></i>
                             <input type="text" autoFocus placeholder="Enter your name"
-                                   className="w-full outline-none text-sm p-1" required/>
+                                   className="w-full outline-none text-sm p-1" name="name" required/>
                         </div>
 
                         <div
                             className="bg-neutral-950 p-2 rounded-lg shadow-lg flex items-center gap-1 w-full md:w-[60%] lg:w-[40%]">
                             <i className='bx bx-envelope text-xl text-amber-500'></i>
-                            <input type="email" autoFocus placeholder="Enter your email"
-                                   className="w-full outline-none text-sm p-1" required/>
+                            <input type="email" placeholder="Enter your email"
+                                   className="w-full outline-none text-sm p-1" name="email" required/>
                         </div>
 
                         <div
                             className="bg-neutral-950 p-2 rounded-lg shadow-lg flex items-center gap-1 w-full md:w-[60%] lg:w-[40%]">
                             <i className='bx bx-lock text-xl text-amber-500'></i>
                             <input type="password" placeholder="Enter your password"
-                                   className="w-full outline-none text-sm p-1" required/>
+                                   className="w-full outline-none text-sm p-1" name="password" required/>
                         </div>
 
                         <div>
