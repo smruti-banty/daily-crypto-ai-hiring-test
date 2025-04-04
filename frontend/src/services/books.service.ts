@@ -47,6 +47,8 @@ export const getBookById = async (id: string) => {
 
 export const createBook = async (book: Book) => {
     try {
+        //Remove _id
+        delete book._id;
         return await apiClient.post<Book>("/", book);
     } catch (error) {
         handleError(error);
@@ -55,6 +57,8 @@ export const createBook = async (book: Book) => {
 
 export const updateBook = async (id: string, book: Book) => {
     try {
+        //Remove _id from book object
+        delete book._id;
         return await apiClient.put<Book>(`/${id}`, book);
     } catch (error) {
         handleError(error);
