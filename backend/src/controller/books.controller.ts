@@ -19,8 +19,12 @@ export const getBook = async (req: Request, res: Response, next: NextFunction) =
     const userId = req.userId;
     const bookId = req.params.bookId;
 
+    if (!userId || !bookId) {
+        return res.status(403).json({ message: "No book with this id" });
+    }
+
     try {
-        const book = await Book.findOne({userId, bookId});
+        const book = await Book.findOne({_id: bookId, userId});
 
         if (!book) {
             res.status(404).json({ message: "Book not found" });
