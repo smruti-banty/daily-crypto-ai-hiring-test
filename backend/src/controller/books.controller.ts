@@ -15,6 +15,23 @@ export const getBooks = async (req: Request, res: Response, next: NextFunction) 
     }
 };
 
+export const getBook = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.userId;
+    const bookId = req.params.bookId;
+
+    try {
+        const book = await Book.findOne({userId, bookId});
+
+        if (!book) {
+            res.status(404).json({ message: "Book not found" });
+        }
+
+        res.json(book);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching book", error });
+    }
+}
+
 /**
  * @desc Add a new book
  * @route POST /api/books
