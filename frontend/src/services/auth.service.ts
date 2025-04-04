@@ -1,4 +1,5 @@
 import axios from "axios";
+import {removeToken, setToken} from "./token.service.ts";
 
 const AUTH_API_BASE_URL = "http://localhost:5000/api/auth";
 
@@ -24,6 +25,6 @@ export const registerUser = async (email:string, password:string, name:string) =
     }
 }
 
-const setToken = (token:string) => {
-    localStorage.setItem("token", token);
+export const logoutUser = () => {
+    removeToken();
 }
