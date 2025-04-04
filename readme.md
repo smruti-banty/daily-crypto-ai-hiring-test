@@ -26,6 +26,7 @@ This project consists of **two separate repositories**:
 ```bash
 git clone https://github.com/smruti-banty/daily-crypto-ai-hiring-test
 git clone https://github.com/Daily-Crypto-AI/hiring-task
+```
 
 ## 2. Install Dependencies
 
@@ -33,6 +34,7 @@ Run the following command in **all 3 sub-projects** (Auth API, Book API, and Fro
 
 ```bash
 npm install
+```
 
 ### 3. Run the Authentication API
 
@@ -44,6 +46,7 @@ Start the server by running:
 
 ```bash
 npm run dev
+```
 
 ### 4. Run the Book API
 
@@ -55,6 +58,7 @@ Start the server by running:
 
 ```bash
 npm run dev
+```
 
 ### 5. Run the Frontend
 
@@ -63,5 +67,6 @@ npm run dev
 
 ```bash
 npm run dev
+```
 
 Visit the app at 👉 [http://localhost:5173](http://localhost:5173)
